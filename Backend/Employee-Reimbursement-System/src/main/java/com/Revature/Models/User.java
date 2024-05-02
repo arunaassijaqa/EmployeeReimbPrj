@@ -24,8 +24,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-
-    private String role ="Employee";
+    private String role ;
+    // private String role ="Employee";
 
 
 
@@ -52,7 +52,6 @@ public class User {
         this.password = password;
 
     }
-
 
     public User(int userId, String firstname, String lastname, String username, String password, String role) {
         this.userId = userId;

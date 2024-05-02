@@ -6,6 +6,7 @@ public class IncomingUserDTO {
     private String lastname;
     private String username;
     private String password;
+    private String role;
 
     public IncomingUserDTO(String firstname, String lastname, String username, String password) {
         this.firstname = firstname;

@@ -2,10 +2,13 @@ package com.Revature.Services;
 
 import com.Revature.DAOs.UserDAO;
 import com.Revature.Models.DTOs.IncomingUserDTO;
+import com.Revature.Models.DTOs.OutgoingUserDTO;
 import com.Revature.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -70,6 +73,27 @@ public class UserService {
 
         //if all checks pass, return a User OR null, and send it to the controller
         return userDAO.findByUsernameAndPassword(userDTO.getUsername(),userDTO.getPassword());
+    }
+
+
+    public List<OutgoingUserDTO> getAllUsers(){
+
+        List<User> allUsers = userDAO.findAll();
+
+        List <OutgoingUserDTO> outUser = new ArrayList();
+
+        for(User u : allUsers){
+            OutgoingUserDTO outU = new OutgoingUserDTO(
+                    u.getUserId(),
+                    u.getFirstname(),
+                    u.getLastname(),
+                    u.getUsername(),
+                    u.getRole());
+
+            outUser.add(outU);
+        }
+        return outUser;
+
     }
 
 }

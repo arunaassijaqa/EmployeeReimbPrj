@@ -4,6 +4,7 @@ import ch.qos.logback.core.net.SyslogOutputStream;
 import com.Revature.Models.DTOs.IncomingUserDTO;
 import com.Revature.Models.DTOs.OutgoingUserDTO;
 import com.Revature.Models.User;
+import com.Revature.Services.ReimbService;
 import com.Revature.Services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,24 @@ public class UserController {
         //Finally, send back a 200 (OK) as well as a OutgoingUserDTO
 
         return ResponseEntity.ok(new OutgoingUserDTO(u.getUserId(),u.getUsername(),u.getFirstname(),u.getLastname(),u.getRole()));
+
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getAllUsers(HttpSession session)
+    {
+
+        System.out.println("check role of current signed user  "+session.getAttribute("role"));
+        //Login check
+        if(session.getAttribute("userId") == null ){
+            /*|| session.getAttribute("status") !="manage"*/
+            return ResponseEntity.status(401).body("You must be logged in  as manager");
+        }
+
+        //Get the userId from the session
+        int userId = (int) session.getAttribute("userId");
+
+        return ResponseEntity.ok(userService.getAllUsers());
 
     }
 
