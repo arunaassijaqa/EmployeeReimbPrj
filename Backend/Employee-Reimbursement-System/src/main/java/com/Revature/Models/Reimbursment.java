@@ -1,6 +1,8 @@
 package com.Revature.Models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,7 +25,7 @@ public class Reimbursment {
 
     @ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
     @JoinColumn(name="userId")
-    //@OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     public Reimbursment() {

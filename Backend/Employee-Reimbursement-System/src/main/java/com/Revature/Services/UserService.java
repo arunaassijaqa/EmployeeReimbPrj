@@ -31,6 +31,8 @@ public class UserService {
         System.out.println("pass   "+userDTO.getPassword());
         System.out.println("fname  "+userDTO.getFirstname());
         System.out.println("lname  " +userDTO.getLastname());
+        System.out.println("role  " +userDTO.getRole());
+
         if(userDTO.getUsername().isBlank() || userDTO.getUsername()==null){
             throw  new IllegalArgumentException("Username Cannot be empty");
 
@@ -51,8 +53,14 @@ public class UserService {
 
         }
 
+        if(userDTO.getRole().isBlank() || userDTO.getRole()==null){
+            throw  new IllegalArgumentException("role of employee Cannot be empty");
+
+        }
+
         System.out.println("before add new user");
-        User newUser = new User(userDTO.getFirstname(), userDTO.getLastname(),userDTO.getUsername(),userDTO.getPassword());
+
+        User newUser = new User(userDTO.getFirstname(), userDTO.getLastname(),userDTO.getUsername(),userDTO.getPassword(),userDTO.getRole());
         System.out.println("After create new user");
 
 
@@ -62,6 +70,7 @@ public class UserService {
         System.out.println("pass   "+newUser.getPassword());
         System.out.println("fname  "+newUser.getFirstname());
         System.out.println("lname  " +newUser.getLastname());
+        System.out.println("lname  " +newUser.getRole());
         return userDAO.save(newUser);
 
     }
@@ -94,6 +103,17 @@ public class UserService {
         }
         return outUser;
 
+    }
+
+    public void deleteuser(int userId)
+    {
+        //TODO: validity checks
+        //make sure the deleter is logged in and is a manager
+        //make sure the user to delete actually exists
+        //make sure the deleter is not trying to delete themselves
+
+
+        userDAO.deleteById(userId);
     }
 
 }

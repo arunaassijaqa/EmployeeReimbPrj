@@ -8,11 +8,22 @@ public class IncomingUserDTO {
     private String password;
     private String role;
 
-    public IncomingUserDTO(String firstname, String lastname, String username, String password) {
-        this.firstname = firstname;
-        this.lastname = lastname;
+
+
+    public IncomingUserDTO(String username, String role, String password, String lastname, String firstname) {
         this.username = username;
+        this.role = role;
         this.password = password;
+        this.lastname = lastname;
+        this.firstname = firstname;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getFirstname() {
@@ -54,6 +65,7 @@ public class IncomingUserDTO {
                 ", lastname='" + lastname + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

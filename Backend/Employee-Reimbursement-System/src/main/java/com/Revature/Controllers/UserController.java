@@ -1,6 +1,7 @@
 package com.Revature.Controllers;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
+import com.Revature.DAOs.UserDAO;
 import com.Revature.Models.DTOs.IncomingUserDTO;
 import com.Revature.Models.DTOs.OutgoingUserDTO;
 import com.Revature.Models.User;
@@ -33,6 +34,7 @@ public class UserController {
     System.out.println("pass   "+userDTO.getPassword());
     System.out.println("fname  "+userDTO.getFirstname());
     System.out.println("lname  " +userDTO.getLastname());
+    System.out.println("role  " +userDTO.getRole());
 
         try {
             userService.addUser(userDTO);
@@ -74,18 +76,46 @@ public class UserController {
     @GetMapping
     public ResponseEntity<?> getAllUsers(HttpSession session)
     {
-
+        //UserDAO userDAO ;
         System.out.println("check role of current signed user  "+session.getAttribute("role"));
+        System.out.println((" current user id " +session.getAttribute("userId")));
+       // int userId = (int) session.getAttribute("userId");
+        //Optional<User> user= userDAO.findById(userId);
+
+       //User u = user.get();
+       //String role = u.getRole();
+
+       //System.out.println("role from user " + role);
         //Login check
-        if(session.getAttribute("userId") == null ){
-            /*|| session.getAttribute("status") !="manage"*/
-            return ResponseEntity.status(401).body("You must be logged in  as manager");
+        if((session.getAttribute("userId") == null ) ){
+            return ResponseEntity.status(401).body("You must be logged ");
         }
+        /*if((role.contains("manger") ) ){
+            return ResponseEntity.status(401).body("You must be logged in  as manager");
+        }*/
+
 
         //Get the userId from the session
-        int userId = (int) session.getAttribute("userId");
+       int userId = (int) session.getAttribute("userId");
 
         return ResponseEntity.ok(userService.getAllUsers());
+
+    }
+
+    //delete a pokemon by ID
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable int userId,HttpSession session)
+    {
+        if((session.getAttribute("userId") == null ) ){
+            return ResponseEntity.status(401).body("You must be logged ");
+        }
+
+        try{
+            userService.deleteuser(userId);
+            return ResponseEntity.ok("User is deleted");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
 
     }
 

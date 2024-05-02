@@ -53,8 +53,16 @@ public class User {
 
     }
 
-    public User(int userId, String firstname, String lastname, String username, String password, String role) {
+    /*public User(int userId, String firstname, String lastname, String username, String password, String role) {
         this.userId = userId;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }*/
+
+    public User(String firstname, String lastname, String username, String password, String role) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
