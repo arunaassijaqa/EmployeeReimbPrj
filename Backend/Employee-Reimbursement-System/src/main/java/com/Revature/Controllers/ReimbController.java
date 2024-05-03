@@ -51,9 +51,15 @@ public class ReimbController {
 
         //Login check
 
-        if(session.getAttribute("userId") == null){
+        if(session.getAttribute("userId") == null ){
             return ResponseEntity.status(401).body("You must be logged in to see your Reimbursements!");
         }
+
+
+        System.out.println("check role of current signed user  "+session.getAttribute("role"));
+    if(!session.getAttribute("role").equals("manager")){
+        return ResponseEntity.status(401).body("You must be logged  as Manager");
+    }
         //Get the userId from the session
 
         int userId =(int)session.getAttribute("userId");
@@ -62,7 +68,7 @@ public class ReimbController {
 
     }
 
-    // get all Reinbursemenrtsof particular user with sataus pendiing
+    // get all Reimbursements of particular user with status pending , accesible by manager only
 
     @GetMapping("/{status}")
     public ResponseEntity<?> getAllReimbursementsByStatus(@PathVariable String status, HttpSession session){
@@ -71,6 +77,11 @@ public class ReimbController {
         System.out.println(" inside getAllReimbursementsByStatus  with status " + status);
         if(session.getAttribute("userId") == null){
             return ResponseEntity.status(401).body("You must be logged in to see your Reimbursements!");
+        }
+
+        System.out.println("check role of current signed user  "+session.getAttribute("role"));
+        if(!session.getAttribute("role").equals("manager")){
+            return ResponseEntity.status(401).body("You must be logged  as Manager");
         }
         //Get the userId from the session
 
@@ -84,7 +95,7 @@ public class ReimbController {
     public ResponseEntity<Object> UpdateReimbursmentStatus(@RequestBody IncomingReimbDTO reimbDTO ,@PathVariable int reimbId,HttpSession session)
     {
         //If the user is not logged in (if the userId is null), send back a 401
-        if(session.getAttribute("userId") == null){
+        if(session.getAttribute("userId") == null ){
             return ResponseEntity.status(401).body("You must be logged in to add the reimbursment");
         }
         System.out.println((" put:Inside the UpdateReimbursmentStatus method "));

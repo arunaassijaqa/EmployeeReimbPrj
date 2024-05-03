@@ -28,8 +28,7 @@ public class UserController {
     }
 @PostMapping
         public ResponseEntity<String> addUser(@RequestBody IncomingUserDTO userDTO){
-        System.out.println(" indise the addUser in Controller layer");
-    System.out.println("name   "+userDTO.getUsername());
+        System.out.println(" indise the addUser in Controller layer");System.out.println("name   "+userDTO.getUsername());
 
     System.out.println("pass   "+userDTO.getPassword());
     System.out.println("fname  "+userDTO.getFirstname());
@@ -61,6 +60,7 @@ public class UserController {
        User u= optionalUser.get();
         //Storing the user info in our session
         session.setAttribute("userId",u.getUserId());
+        session.setAttribute("role", u.getRole());
         session.setAttribute("username",u.getUsername());//probably won't use this
 
 
@@ -73,11 +73,12 @@ public class UserController {
 
     }
 
+    // Get users (allow manager only)
     @GetMapping
     public ResponseEntity<?> getAllUsers(HttpSession session)
     {
         //UserDAO userDAO ;
-        System.out.println("check role of current signed user  "+session.getAttribute("role"));
+
         System.out.println((" current user id " +session.getAttribute("userId")));
        // int userId = (int) session.getAttribute("userId");
         //Optional<User> user= userDAO.findById(userId);
@@ -87,9 +88,15 @@ public class UserController {
 
        //System.out.println("role from user " + role);
         //Login check
-        if((session.getAttribute("userId") == null ) ){
-            return ResponseEntity.status(401).body("You must be logged ");
+        if((session.getAttribute("userId") == null )){
+            return ResponseEntity.status(401).body("You must be logged  as Manager");
         }
+
+        System.out.println("check role of current signed user  "+session.getAttribute("role"));
+       if(!session.getAttribute("role").equals("manager")){
+            return ResponseEntity.status(401).body("You must be logged  as Manager");
+        }
+        System.out.println("Lets try manager role");
         /*if((role.contains("manger") ) ){
             return ResponseEntity.status(401).body("You must be logged in  as manager");
         }*/
@@ -108,6 +115,11 @@ public class UserController {
     {
         if((session.getAttribute("userId") == null ) ){
             return ResponseEntity.status(401).body("You must be logged ");
+        }
+
+        System.out.println("check role of current signed user  "+session.getAttribute("role"));
+        if(!session.getAttribute("role").equals("manager")){
+            return ResponseEntity.status(401).body("You must be logged  as Manager");
         }
 
         try{
