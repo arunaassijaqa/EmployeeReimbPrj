@@ -56,11 +56,36 @@ public class ReimbService {
     }
 
     // get all Reimbursements
-    public List<OutgoingReimbDTO> getAllReimbursements(int userId)
+    public List<OutgoingReimbDTO> getAllReimbursementsByUserId(int userId)
     {
         //get all Reimbursements from the DB
 
         List<Reimbursment> allReimb = reimbDAO.findByUserUserId(userId);
+
+        //for every reimbursement retrieved, we'll create a new OutgoingDTO
+        //and add it to a List to be returned
+
+        List<OutgoingReimbDTO> outReimb = new ArrayList<>();
+
+        for(Reimbursment r : allReimb)
+        {
+            OutgoingReimbDTO outR= new OutgoingReimbDTO(
+                    r.getReimbId(),
+                    r.getDescription(),
+                    r.getAmount(),
+                    r.getStatus(),
+                    r.getUser().getUserId());
+
+            outReimb.add(outR);
+        }
+        return outReimb;
+    }
+
+    public List<OutgoingReimbDTO> getAllReimbursements()
+    {
+        //get all Reimbursements from the DB
+
+        List<Reimbursment> allReimb = reimbDAO.findAll();
 
         //for every reimbursement retrieved, we'll create a new OutgoingDTO
         //and add it to a List to be returned
@@ -102,6 +127,34 @@ public class ReimbService {
                     r.getAmount(),
                     r.getStatus(),
                     r.getUser().getUserId());
+
+            outReimb.add(outR);
+        }
+        return outReimb;
+
+    }
+
+    public List<OutgoingReimbDTO> getAllReimbByUserIdAndStatus(int userId,String status)
+    {
+        System.out.println(" inside getAllReimbursementsByUserIdAndStatus  with status " + status);
+
+        //get all Reimbursements from the DB
+
+        List<Reimbursment> allReimb = reimbDAO.findAllByUserUserIdAndStatus( userId, status);
+
+        //for every reimbursement retrieved, we'll create a new OutgoingDTO
+        //and add it to a List to be returned
+
+        List<OutgoingReimbDTO> outReimb = new ArrayList<>();
+
+        for(Reimbursment r : allReimb)
+        {
+            OutgoingReimbDTO outR= new OutgoingReimbDTO(
+                    r.getReimbId(),
+                    r.getDescription(),
+                    r.getAmount(),
+                    r.getStatus(),
+                   r.getUser().getUserId());
 
             outReimb.add(outR);
         }

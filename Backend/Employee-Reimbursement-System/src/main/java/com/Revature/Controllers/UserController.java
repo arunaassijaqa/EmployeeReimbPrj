@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.Optional;
 
 @RestController
@@ -26,9 +27,13 @@ public class UserController {
         System.out.println("inside user controller constructure");
         this.userService = userService;
     }
+
+    // U1.Employee: Create an account(create new user)
 @PostMapping
-        public ResponseEntity<String> addUser(@RequestBody IncomingUserDTO userDTO){
-        System.out.println(" indise the addUser in Controller layer");System.out.println("name   "+userDTO.getUsername());
+public ResponseEntity<String> addUser(@RequestBody IncomingUserDTO userDTO){
+
+    System.out.println(" inside the addUser in Controller layer");
+    System.out.println("name   "+userDTO.getUsername());
 
     System.out.println("pass   "+userDTO.getPassword());
     System.out.println("fname  "+userDTO.getFirstname());
@@ -39,12 +44,14 @@ public class UserController {
             userService.addUser(userDTO);
             return ResponseEntity.status(201).body(userDTO.getFirstname() + userDTO.getLastname()+"with"+userDTO.getUsername()+"has sucessfully added");
 
-        }catch(IllegalArgumentException  e )
+        }catch(Exception   e )
         {
             return  ResponseEntity.status(400).body(e.getMessage());
         }
+
     }
 
+    // Login user(manager/employee)
     @PostMapping("/login")
     public ResponseEntity <?> loginUser(@RequestBody IncomingUserDTO userDTO, HttpSession session){
 
@@ -73,7 +80,7 @@ public class UserController {
 
     }
 
-    // Get users (allow manager only)
+    // M4.Get users (allow manager only)
     @GetMapping
     public ResponseEntity<?> getAllUsers(HttpSession session)
     {
@@ -96,10 +103,6 @@ public class UserController {
        if(!session.getAttribute("role").equals("manager")){
             return ResponseEntity.status(401).body("You must be logged  as Manager");
         }
-        System.out.println("Lets try manager role");
-        /*if((role.contains("manger") ) ){
-            return ResponseEntity.status(401).body("You must be logged in  as manager");
-        }*/
 
 
         //Get the userId from the session
@@ -109,23 +112,39 @@ public class UserController {
 
     }
 
-    //delete a pokemon by ID
+    //M5:delete a User  by ID
     @DeleteMapping("/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable int userId,HttpSession session)
     {
-        if((session.getAttribute("userId") == null ) ){
+        if((session.getAttribute("userId") == null ) )
+        {
             return ResponseEntity.status(401).body("You must be logged ");
         }
 
+        if(((int)session.getAttribute("userId") == userId ) )
+        {
+            return ResponseEntity.status(401).body("User Can't delete him/herself ");
+        }
+
         System.out.println("check role of current signed user  "+session.getAttribute("role"));
-        if(!session.getAttribute("role").equals("manager")){
+        if(!session.getAttribute("role").equals("manager"))
+        {
             return ResponseEntity.status(401).body("You must be logged  as Manager");
         }
 
-        try{
-            userService.deleteuser(userId);
-            return ResponseEntity.ok("User is deleted");
-        }catch (Exception e){
+        try
+        {
+            if (userService.deleteuser(userId))
+            {
+                return ResponseEntity.ok("User " + userId+" is deleted");
+            } else
+            {
+                return ResponseEntity.badRequest().body("User not found");
+            }
+
+        }
+        catch (Exception e)
+        {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 

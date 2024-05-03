@@ -20,7 +20,7 @@ public class Reimbursment {
     private int amount;
 
 
-    private String status ;
+    private String status ="pending" ;
 
 
     /*@ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)

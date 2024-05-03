@@ -7,6 +7,7 @@ import com.Revature.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +23,7 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
-    public User addUser(IncomingUserDTO userDTO){
+    public User addUser(IncomingUserDTO userDTO)   {
 
         System.out.println(" indise the addUser in service layer");
 
@@ -71,6 +72,7 @@ public class UserService {
         System.out.println("fname  "+newUser.getFirstname());
         System.out.println("lname  " +newUser.getLastname());
         System.out.println("lname  " +newUser.getRole());
+
         return userDAO.save(newUser);
 
     }
@@ -105,15 +107,22 @@ public class UserService {
 
     }
 
-    public void deleteuser(int userId)
+    public boolean deleteuser(int userId)
     {
+
+        Optional <User> u = userDAO.findById(userId);
         //TODO: validity checks
         //make sure the deleter is logged in and is a manager
         //make sure the user to delete actually exists
         //make sure the deleter is not trying to delete themselves
+        if( u.isEmpty() )
+        {
+            return false;
+        }
 
+            userDAO.deleteById(userId);
+            return true;
 
-        userDAO.deleteById(userId);
     }
 
 }
