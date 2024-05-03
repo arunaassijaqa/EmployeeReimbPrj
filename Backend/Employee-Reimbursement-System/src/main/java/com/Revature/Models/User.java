@@ -3,6 +3,8 @@ package com.Revature.Models;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
+
 @Controller
 @Entity
 @Table(name="users")
@@ -24,8 +26,12 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String role ;
     // private String role ="Employee";
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Reimbursment> reimbursment;
 
 
 

@@ -45,7 +45,7 @@ public class ReimbController {
     }
 
 
-    // Get all Reimbursements
+    // Get all Reimbursements by user id
 @GetMapping
     public ResponseEntity<?> getAllReimbursements(HttpSession session){
 
@@ -62,4 +62,36 @@ public class ReimbController {
 
     }
 
+    // get all Reinbursemenrtsof particular user with sataus pendiing
+
+    @GetMapping("/{status}")
+    public ResponseEntity<?> getAllReimbursementsByStatus(@PathVariable String status, HttpSession session){
+
+        //Login check
+        System.out.println(" inside getAllReimbursementsByStatus  with status " + status);
+        if(session.getAttribute("userId") == null){
+            return ResponseEntity.status(401).body("You must be logged in to see your Reimbursements!");
+        }
+        //Get the userId from the session
+
+       // int userId =(int)session.getAttribute("userId");
+
+        return ResponseEntity.ok((reimbService.getAllReimbByStatus(status)));
+
+    }
+
+    @PutMapping("/{reimbId}")
+    public ResponseEntity<Object> UpdateReimbursmentStatus(@RequestBody IncomingReimbDTO reimbDTO ,@PathVariable int reimbId,HttpSession session)
+    {
+        //If the user is not logged in (if the userId is null), send back a 401
+        if(session.getAttribute("userId") == null){
+            return ResponseEntity.status(401).body("You must be logged in to add the reimbursment");
+        }
+        System.out.println((" put:Inside the UpdateReimbursmentStatus method "));
+
+        Reimbursment r = reimbService.UpdateReimb(reimbDTO,reimbId);
+
+        return ResponseEntity.ok(r);
+
+    }
 }

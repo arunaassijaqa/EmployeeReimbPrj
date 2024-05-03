@@ -20,15 +20,27 @@ public class Reimbursment {
     private int amount;
 
 
-    private String status = "pending";
+    private String status ;
 
 
-    @ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
+    /*@ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
     @JoinColumn(name="userId")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.CASCADE)*/
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="userId")
+
     private User user;
 
     public Reimbursment() {
+    }
+
+
+    public Reimbursment(String description, int amount, String status, User user) {
+        this.description = description;
+        this.amount = amount;
+        this.status = status;
+        this.user = user;
     }
 
     public Reimbursment(int reimbId, String description, int amount, String status, User user) {
@@ -68,6 +80,9 @@ public class Reimbursment {
         this.amount = amount;
         this.user = user;
     }
+
+
+
 
     public int getReimbId() {
         return reimbId;

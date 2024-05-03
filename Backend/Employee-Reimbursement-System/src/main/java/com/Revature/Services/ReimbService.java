@@ -7,10 +7,12 @@ import com.Revature.Models.DTOs.OutgoingReimbDTO;
 import com.Revature.Models.Reimbursment;
 import com.Revature.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReimbService {
@@ -78,5 +80,54 @@ public class ReimbService {
         }
         return outReimb;
     }
+
+    public List<OutgoingReimbDTO> getAllReimbByStatus(String status)
+    {
+        System.out.println(" inside getAllReimbursementsByStatus  with status " + status);
+
+        //get all Reimbursements from the DB
+
+        List<Reimbursment> allReimb = reimbDAO.findAllByStatus(status);
+
+        //for every reimbursement retrieved, we'll create a new OutgoingDTO
+        //and add it to a List to be returned
+
+        List<OutgoingReimbDTO> outReimb = new ArrayList<>();
+
+        for(Reimbursment r : allReimb)
+        {
+            OutgoingReimbDTO outR= new OutgoingReimbDTO(
+                    r.getReimbId(),
+                    r.getDescription(),
+                    r.getAmount(),
+                    r.getStatus(),
+                    r.getUser().getUserId());
+
+            outReimb.add(outR);
+        }
+        return outReimb;
+
+    }
+
+  public  Reimbursment UpdateReimb(IncomingReimbDTO reimbDTO, int reimId){
+
+
+System.out.println("Service: Inside UpdateReimb method ");
+      Optional<Reimbursment> r = reimbDAO.findById(reimId);
+
+      Reimbursment reimb = r.get();
+
+      reimb.setStatus(reimbDTO.getStatus());
+      reimb.setReimbId(reimId);
+      reimb.setDescription(reimbDTO.getDescription());
+      reimb.setAmount(reimbDTO.getAmount());
+
+
+
+      return reimbDAO.save(reimb);
+
+
+
+  }
 
 }
