@@ -7,6 +7,7 @@ import { Register } from './Components/Login/Register';
 import { Reimbursement } from './Components/Reimbursement/Reimbursement';
 import { NewReimb } from './Components/Reimbursement/NewReimb';
 
+import 'bootstrap/dist/css/bootstrap.css';
 
 
 function App() {

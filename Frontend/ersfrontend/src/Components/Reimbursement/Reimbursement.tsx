@@ -5,6 +5,11 @@ import axios from "axios"
 import { useState } from "react"
 import { ReimbInterface } from "../../Interfaces/ReimbInterface"
 import { ShowReimb } from "./ShowReimb"
+import { UserInterface } from "../../Interfaces/UserInterface"
+import { ShUser } from "./ShowUser"
+
+
+
 
 export const Reimbursement : React.FC = () =>{
 
@@ -12,12 +17,15 @@ export const Reimbursement : React.FC = () =>{
     //we'll store state that consists of an Array of Reimbursement objects
     const [reimbList, setReimbList] = useState<ReimbInterface[]>([]) //start with empty a
 
+    const [userList, setUserList] = useState<UserInterface[]>([]) //start with empty a
+
 //useNavigate to navigate between components
 const navigate = useNavigate()
 
 
 const getReimb = (input:any) => 
 {
+   
 
     if(input.target.value === "all"){
         alert("Here We will show all reimbursements")
@@ -25,12 +33,16 @@ const getReimb = (input:any) =>
     }
     if(input.target.value === "pending"){
         alert("Here We will show all pending reimbursements")
+
+        showOtherStatusReimb(input.target.value)
     }
     if(input.target.value === "approved"){
         alert("Here We will show all approved reimbursements")
+        showOtherStatusReimb(input.target.value)
     }
     if(input.target.value === "denied"){
         alert("Here We will show all denied reimbursements")
+        showOtherStatusReimb(input.target.value)
     }
 }
 
@@ -45,6 +57,9 @@ const createReimb = () =>{
 
 const showAllReimb =async () =>{
 
+   
+
+    alert("Call Get axios and wait for response")
     //Send a POST request to the backend for create new user
     //NOTE: with credentials is what lets us save/send user session info
     const response = await axios.get(state.baseReimbUrl,
@@ -61,6 +76,53 @@ const showAllReimb =async () =>{
     .catch((error) => {alert("show All reimbursement request Failed!")}) //If login fails, tell the user that
 
 }
+const showOtherStatusReimb =async (status:string) =>{
+
+    console.log(" inside showOtherStatusReimb")
+    console.log(status)
+    
+
+    //Send a POST request to the backend for create new user
+    //NOTE: with credentials is what lets us save/send user session info
+    const response = await axios.get(state.baseReimbUrl+"/"+status,
+    {withCredentials:true})
+    .then((response) => {
+
+       
+        setReimbList(response.data)
+        
+        console.log(response.data)
+       
+
+    })
+    .catch((error) => {alert("show All Pending reimbursement request Failed!")}) //If login fails, tell the user that
+    
+
+}
+
+const showAllEmployees =async () =>{
+
+   alert("showAllEmployees: lets call get method here")
+
+    //Send a POST request to the backend for create new user
+    //NOTE: with credentials is what lets us save/send user session info
+    const response = await axios.get(state.baseUserUrl,
+    {withCredentials:true})
+    .then((response) => {
+
+       
+        setUserList(response.data)
+        
+        console.log(response.data)
+       
+
+    })
+    .catch((error) => {alert("show All users request Failed!")}) //If login fails, tell the user that
+
+}
+
+
+
 
     return(
 
@@ -74,13 +136,14 @@ const showAllReimb =async () =>{
             </div>
             <div className = "text-container">
                 
-                <button className ="reimb-button2" onClick={createReimb} >Create Reimbursement </button>
+                <button className ="reimb-createbutton" onClick={createReimb} >Create Reimbursement </button>
 
                 
 
-                <button className ="reimb-button" onClick={() => navigate("/")}>Back</button>
+                <button className ="reimb-backbutton" onClick={() => navigate("/")}>Back</button>
+                <button className ="reimb-allempbutton" onClick={showAllEmployees}>Show All Employees </button>
 
-                <select className="reimb-button2" name="selectReimb" onChange={getReimb}>
+                <select className="reimb-selectreimb" name="selectReimb" onChange={getReimb}>
                     <option selected disabled value="selectmenu">Select Reimbursement Menu</option>
                     <option value="all">Show All Reimbursements</option>
                     <option value="pending">Show Pending Reimbursements </option>
@@ -89,20 +152,31 @@ const showAllReimb =async () =>{
                 </select>
             </div>
 
-            <div className="container-container">
+            <div className="reimb-container">
 
-                {/* using map(), for every pokemon that belongs to the logged in user... 
-                Display one Pokemon component, and a button to delete it*/}
+                
                 {reimbList.map((reimb, index)  => 
                     <div>
                         <ShowReimb {...reimb}></ShowReimb>
                     
                     </div>
-           )}
+                 )}
 
-            {/* If you need to render multiple things in map(), they need to be in a <div> */}
 
-        </div>
+            </div>
+
+            <div className="reimb-container">
+
+                
+                {userList.map((u, index)  => 
+                <div>
+                    <ShUser {...u}></ShUser>
+
+                </div>
+                )}
+
+
+            </div>
         </div>
     )
 }
