@@ -41,7 +41,7 @@ public class ReimbController {
         Reimbursment r = reimbService.addReimb(reimbDTO);
 
         return  ResponseEntity.status(201).body((
-                r.getUser().getUsername() + " Added  Reimbursement  with " + r.getReimbId()
+                r.getUser().getUsername() + " Added Reimbursement with Reimbursement ID : " + r.getReimbId()
                 ));
 
     }

@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin( origins =  "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class UserController {
 
     private UserService userService;
@@ -30,7 +30,7 @@ public class UserController {
 
     // U1.Employee: Create an account(create new user)
 @PostMapping
-public ResponseEntity<String> addUser(@RequestBody IncomingUserDTO userDTO){
+public ResponseEntity<?> addUser(@RequestBody IncomingUserDTO userDTO){
 
     System.out.println(" inside the addUser in Controller layer");
     System.out.println("name   "+userDTO.getUsername());
@@ -42,7 +42,7 @@ public ResponseEntity<String> addUser(@RequestBody IncomingUserDTO userDTO){
 
         try {
             userService.addUser(userDTO);
-            return ResponseEntity.status(201).body(userDTO.getFirstname() + userDTO.getLastname()+"with"+userDTO.getUsername()+"has sucessfully added");
+            return ResponseEntity.status(201).body(userDTO);
 
         }catch(Exception   e )
         {
@@ -57,7 +57,7 @@ public ResponseEntity<String> addUser(@RequestBody IncomingUserDTO userDTO){
 
         //Get the User object from the service (which talks to the DB)
         Optional<User> optionalUser=userService.loginUser(userDTO);
-
+        System.out.println("Inside login method");
         //If login fails (which will return an empty optional), tell the user they failed
         if(optionalUser.isEmpty())
         {
