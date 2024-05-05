@@ -7,6 +7,7 @@ import { ReimbInterface } from "../../Interfaces/ReimbInterface"
 import { ShowReimb } from "./ShowReimb"
 import { UserInterface } from "../../Interfaces/UserInterface"
 import { ShUser } from "./ShowUser"
+import { setEmitFlags } from "typescript"
 
 
 
@@ -19,13 +20,28 @@ export const Reimbursement : React.FC = () =>{
 
     const [userList, setUserList] = useState<UserInterface[]>([]) //start with empty a
 
+    /*const[reimburse,setReimburse] = useState<ReimbInterface>( {
+        reimbId : 0,
+        description: "",
+        amount : 0,
+        status : "",
+        userId : 0
+
+         })*/
+
+    
+    
+
+    const[flagEmplist,setFlagEmplist] = useState(false)
+    const[flagRelist,setFlagRelist] = useState(false)
+
 //useNavigate to navigate between components
 const navigate = useNavigate()
 
 
 const getReimb = (input:any) => 
 {
-   
+    
 
     if(input.target.value === "all"){
         alert("Here We will show all reimbursements")
@@ -66,9 +82,9 @@ const showAllReimb =async () =>{
     {withCredentials:true})
     .then((response) => {
 
-       
+        setFlagEmplist(false)
         setReimbList(response.data)
-        
+        setFlagRelist(true) 
         console.log(response.data)
        
 
@@ -88,9 +104,10 @@ const showOtherStatusReimb =async (status:string) =>{
     {withCredentials:true})
     .then((response) => {
 
-       
+        setFlagEmplist(false)
         setReimbList(response.data)
-        
+          
+        setFlagRelist(true) 
         console.log(response.data)
        
 
@@ -104,14 +121,15 @@ const showAllEmployees =async () =>{
 
    alert("showAllEmployees: lets call get method here")
 
-    //Send a POST request to the backend for create new user
+    //Send a GET request to the backend for create new user
     //NOTE: with credentials is what lets us save/send user session info
     const response = await axios.get(state.baseUserUrl,
     {withCredentials:true})
     .then((response) => {
 
-       
+       setFlagRelist(false)
         setUserList(response.data)
+        setFlagEmplist(true)
         
         console.log(response.data)
        
@@ -120,6 +138,68 @@ const showAllEmployees =async () =>{
     .catch((error) => {alert("show All users request Failed!")}) //If login fails, tell the user that
 
 }
+
+const apprReimb =async (reimb:ReimbInterface) =>{
+
+    alert("apprReimb: lets call post method here for approval")
+    console.log(reimb)
+    //setReimburse(reimb)
+
+    let url :string = state.baseReimbUrl + "/" + reimb?.reimbId
+
+    console.log(url)
+    
+    reimb.status="approved"
+
+    const response = await axios.put(url,reimb,
+        {withCredentials:true})
+        .then((response) => {
+    
+           
+            setUserList(response.data)
+            
+            
+            console.log(response.data)
+           
+    
+        })
+        .catch((error) => {alert("Approve Reimb request Failed!")}) //If login fails, tell the user that
+    
+ 
+     
+ 
+ }
+
+ const apprReimbdeny =async (reimb:ReimbInterface) =>{
+
+    alert("apprReimb: lets call post method here for approval")
+    console.log(reimb)
+    //setReimburse(reimb)
+
+    let url :string = state.baseReimbUrl + "/" + reimb?.reimbId
+
+    console.log(url)
+    
+    reimb.status="denied"
+
+    const response = await axios.put(url,reimb,
+        {withCredentials:true})
+        .then((response) => {
+    
+           
+            setUserList(response.data)
+            
+            
+            console.log(response.data)
+           
+    
+        })
+        .catch((error) => {alert("Denied Reimb request Failed!")}) //If login fails, tell the user that
+    
+ 
+     
+ 
+ }
 
 
 
@@ -145,6 +225,7 @@ const showAllEmployees =async () =>{
 
                 <select className="reimb-selectreimb" name="selectReimb" onChange={getReimb}>
                     <option selected disabled value="selectmenu">Select Reimbursement Menu</option>
+                   
                     <option value="all">Show All Reimbursements</option>
                     <option value="pending">Show Pending Reimbursements </option>
                     <option value="approved">Show Approved Reimbursements</option>
@@ -152,21 +233,68 @@ const showAllEmployees =async () =>{
                 </select>
             </div>
 
+            {flagRelist ? (
+
             <div className="reimb-container">
+                 <table className = "table">                    
+                    <th>
+                        Reimbursement Details: {reimbList.length} records
+                    </th>        
+                </table>
 
                 
                 {reimbList.map((reimb, index)  => 
                     <div>
                         <ShowReimb {...reimb}></ShowReimb>
+                        { ( (state.userSessionData.role === "manager") && (reimb.status==="pending" ) ) ? (
+                            <button className ="reimb-approve" onClick={() => apprReimb(reimb)}>Approve </button>
+                            
+                            
+                        ) : "" }
+
+                        { ( (state.userSessionData.role === "manager") && (reimb.status==="pending" ) ) ? (
+                             <button className ="reimb-approve" onClick={() => apprReimbdeny(reimb)}>Denied </button>
+                           ) : "" }
+
+                        
+
                     
                     </div>
                  )}
 
-
             </div>
+            ) : ""  }
+
+            {flagEmplist  ? (
 
             <div className="reimb-container">
-
+                <table className = "table">                    
+                    <th>
+                        Employee Details: {userList.length} records
+                    </th>        
+                </table>
+                <table className = "table">                    
+                    
+                    <td>
+                        ID
+                       </td>
+                       <td>
+                        Username
+                       </td>
+                       <td>
+                        Firstname
+                        </td>
+                      
+                        <td>
+                        Lastname
+                        </td>
+                      
+                        <td>
+                        Role
+                       </td>
+                            
+                </table>
+                
                 
                 {userList.map((u, index)  => 
                 <div>
@@ -174,9 +302,10 @@ const showAllEmployees =async () =>{
 
                 </div>
                 )}
-
+                
 
             </div>
+            ) : "" }
         </div>
     )
 }
