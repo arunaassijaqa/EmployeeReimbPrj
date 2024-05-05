@@ -49,15 +49,26 @@ export const NewReimb : React.FC = () =>{
 
         //console.log(reimb)
 
-        if( reimb.amount <=0 )
+        if( (reimb.amount <=0 ))
             {
                 //console.log("Inside createReimb function :validation failed")
 
 
-                alert("Please enter  amount greater than zero ")
+                alert("Please enter amount greater than zero ")
                 return
             }
 
+            if( (reimb.description == "" ))
+                {
+                    //console.log("Inside createReimb function :validation failed")
+    
+    
+                    alert("Please enter description ")
+                    return
+                }
+
+
+            
         console.log("Inside createReimb function: send post request here ")
 
 
@@ -92,11 +103,11 @@ export const NewReimb : React.FC = () =>{
             <br></br>
             
             <div className ="input-container">                
-                <input type ="text" placeholder="description(optional)" name="description" onChange={storeValues}></input>
+                <input type ="text" placeholder="description" name="description" onChange={storeValues}></input>
             </div>
             <br></br>
             <div className ="input-container">
-                <input type ="number" placeholder="amount(Required)" name="amount" onChange={storeValues}></input>
+                <input type ="number" placeholder="amount" name="amount" onChange={storeValues}></input>
             </div>
 
             

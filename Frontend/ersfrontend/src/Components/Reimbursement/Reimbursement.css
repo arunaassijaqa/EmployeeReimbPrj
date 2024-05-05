@@ -224,6 +224,22 @@
     margin-bottom: 10px;
 
 }
+
+.reimb-approve {  
+  
+    background: #f0f3f5; 
+    width: 10%;
+    margin-left:10px;
+    margin-right:10px;
+    border-color: #2d2f37;
+    border-radius: 25px;
+    font-size: 0.75rem;
+    font-weight: 400;
+    padding: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
 .reimb-button:hover {
     cursor: pointer;
     box-shadow: 0 0 50px 15px #cdd7dd;

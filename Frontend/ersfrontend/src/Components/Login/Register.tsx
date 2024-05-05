@@ -93,26 +93,31 @@ export const Register : React.FC =() => {
             <h6>Enter Employee Information</h6>
             <br></br>
             <br></br>
+
+
             <div className ="input-container">
                 <input type ="text" placeholder="firstname" name="firstname" onChange={storeValues}></input>
-                
             </div>
            
 
             <div className ="input-container">
+            
                 <input type ="text" placeholder="lastname" name="lastname" onChange={storeValues}></input>
             </div>
 
             <div className ="input-container">
+            
                 <input type ="text" placeholder="username" name="username" onChange={storeValues}></input>
             </div>
 
             <div className ="input-container">
+          
                 <input type ="password" placeholder="password" name="password" onChange={storeValues}></input>
             </div>
 
 
             <div className ="input-container">
+           
                 <select name="selectrole" id="role" onChange={storeValues}>
                     <option selected disabled value="selectrole">Select Role</option>
                     <option value="employee">employee</option>

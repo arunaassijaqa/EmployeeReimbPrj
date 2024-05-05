@@ -44,20 +44,20 @@ const getReimb = (input:any) =>
     
 
     if(input.target.value === "all"){
-        alert("Here We will show all reimbursements")
+
         showAllReimb()
     }
     if(input.target.value === "pending"){
-        alert("Here We will show all pending reimbursements")
+        
 
         showOtherStatusReimb(input.target.value)
     }
     if(input.target.value === "approved"){
-        alert("Here We will show all approved reimbursements")
+      
         showOtherStatusReimb(input.target.value)
     }
     if(input.target.value === "denied"){
-        alert("Here We will show all denied reimbursements")
+   
         showOtherStatusReimb(input.target.value)
     }
 }
@@ -257,7 +257,13 @@ const apprReimb =async (reimb:ReimbInterface) =>{
                 
 
                 <button className ="reimb-backbutton" onClick={() => navigate("/")}>Back</button>
+
+
+                
+                {state.userSessionData.role == "manager"  ? (
+
                 <button className ="reimb-allempbutton" onClick={showAllEmployees}>Show All Employees </button>
+                ):"" }
 
                 <select className="reimb-selectreimb" name="selectReimb" onChange={getReimb}>
                     <option selected disabled value="selectmenu">Select Reimbursement Menu</option>
@@ -277,11 +283,34 @@ const apprReimb =async (reimb:ReimbInterface) =>{
                         Reimbursement Details: {reimbList.length} records
                     </th>        
                 </table>
+                <table className = "table">                    
+                    
+                    <td>
+                        ReimbID
+                       </td>
+                       <td>
+                        Description
+                       </td>
+                       <td>
+                        Amount
+                        </td>
+                      
+                        <td>
+                        Status
+                        </td>
+                      
+                        <td>
+                        UserID
+                       </td>
+                            
+                </table>
 
                 
                 {reimbList.map((reimb, index)  => 
+
                     <div>
                         <ShowReimb {...reimb}></ShowReimb>
+
                         { ( (state.userSessionData.role === "manager") && (reimb.status==="pending" ) ) ? (
                             <button className ="reimb-approve" onClick={() => apprReimb(reimb)}>Approve </button>
                             
@@ -289,7 +318,7 @@ const apprReimb =async (reimb:ReimbInterface) =>{
                         ) : "" }
 
                         { ( (state.userSessionData.role === "manager") && (reimb.status==="pending" ) ) ? (
-                             <button className ="reimb-approve" onClick={() => apprReimbdeny(reimb)}>Denied </button>
+                             <button className ="reimb-approve" onClick={() => apprReimbdeny(reimb)}>Deny </button>
                            ) : "" }
 
                         
