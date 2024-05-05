@@ -65,7 +65,7 @@ const getReimb = (input:any) =>
 
 const createReimb = () =>{
 
-    alert(" create new reimbersment")
+    //alert(" create new reimbersment")
     navigate("/creimb")
 
       
@@ -75,7 +75,7 @@ const showAllReimb =async () =>{
 
    
 
-    alert("Call Get axios and wait for response")
+    //alert("Call Get axios and wait for response")
     //Send a POST request to the backend for create new user
     //NOTE: with credentials is what lets us save/send user session info
     const response = await axios.get(state.baseReimbUrl,
@@ -119,7 +119,7 @@ const showOtherStatusReimb =async (status:string) =>{
 
 const showAllEmployees =async () =>{
 
-   alert("showAllEmployees: lets call get method here")
+   //alert("showAllEmployees: lets call get method here")
 
     //Send a GET request to the backend for create new user
     //NOTE: with credentials is what lets us save/send user session info
@@ -141,9 +141,9 @@ const showAllEmployees =async () =>{
 
 const apprReimb =async (reimb:ReimbInterface) =>{
 
-    alert("apprReimb: lets call post method here for approval")
+    //alert("apprReimb: lets call post method here for approval")
     console.log(reimb)
-    //setReimburse(reimb)
+    
 
     let url :string = state.baseReimbUrl + "/" + reimb?.reimbId
 
@@ -172,9 +172,9 @@ const apprReimb =async (reimb:ReimbInterface) =>{
 
  const apprReimbdeny =async (reimb:ReimbInterface) =>{
 
-    alert("apprReimb: lets call post method here for approval")
+    //alert("apprReimb: lets call post method here for approval")
     console.log(reimb)
-    //setReimburse(reimb)
+    
 
     let url :string = state.baseReimbUrl + "/" + reimb?.reimbId
 
@@ -204,14 +204,37 @@ const apprReimb =async (reimb:ReimbInterface) =>{
  //Delete user by id
  const userdelete = async(userId:number | undefined) => {
 
-    //TODO: throw some error if pokeId is typeof undefined
-    alert(userId)
-    const response = await axios.delete(state.baseUserUrl +"/"+ userId, {withCredentials:true})
-    .then((response) => console.log(response.data))
+    let message:string = " Do you really want to delete?"
     
-    .catch(
-        (error) => {alert("Denied Reimb request Failed!")}
-    )
+    //alert(userId)
+    if (window.confirm(message)) {
+        //If user say 'yes' to confirm
+        console.log( ' is confirmed');
+      
+        //TODO: throw some error if userID is typeof undefined
+
+
+        const response = await axios.delete(state.baseUserUrl +"/"+ userId, {withCredentials:true})
+        .then((response) => {
+        
+            
+            alert(response.data)
+            
+            
+            console.log(response.data)
+        
+
+        })
+        
+        .catch(
+            (error) => {alert("Denied Reimb request Failed!")}
+        )
+
+    } else {
+    //If user say 'no' and cancelled the action
+        console.log( ' is cancelled');
+  }
+
 
 }
 

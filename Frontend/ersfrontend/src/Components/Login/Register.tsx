@@ -88,12 +88,16 @@ export const Register : React.FC =() => {
 
     return(
 
-        <div>
-            <h1>Enter Employee Information</h1>
-
+        <div className ="login">
+            <div className ="text-container">
+            <h6>Enter Employee Information</h6>
+            <br></br>
+            <br></br>
             <div className ="input-container">
                 <input type ="text" placeholder="firstname" name="firstname" onChange={storeValues}></input>
+                
             </div>
+           
 
             <div className ="input-container">
                 <input type ="text" placeholder="lastname" name="lastname" onChange={storeValues}></input>
@@ -117,10 +121,13 @@ export const Register : React.FC =() => {
 
             </div>
 
+            <br></br>
+            <br></br>
+            
             <button className ="login-button" onClick= {createuser}>Register</button>
             <button className ="login-button" onClick={() => navigate("/")}>Back</button>
         
-
+            </div>
         </div>
     )
 

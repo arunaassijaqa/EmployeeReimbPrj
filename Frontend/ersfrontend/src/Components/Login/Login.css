@@ -1,3 +1,5 @@
+
+
 .login {
     width: stretch;
     display: flex;
@@ -15,10 +17,11 @@
 
 .input-container {
     height: 10px;
-    margin-bottom: 100px;
+    margin-top:1px;
+    margin-bottom: 10px;
     margin-left: auto;
     margin-right:auto;
-    background-color: #0f4524;
+  
     width: 20%;
     border-radius: 10px;
     padding: 10px;
@@ -56,7 +59,8 @@
     margin-top: 20%;
 }
 
-input{
+.input{
     border-style: hidden;
     width: stretch;
 }
+

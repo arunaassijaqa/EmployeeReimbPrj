@@ -40,6 +40,13 @@ export const Login :React.FC =() =>{
 
         console.log(user)
 
+        if(user.username === "" || user.password === "")
+        {
+
+                alert(" Please provide correct credentials to login")
+                return
+        }
+
         //Send a POST request to the backend for login
         //NOTE: with credentials is what lets us save/send user session info
         const response = await axios.post(state.baseLoginUrl, 
@@ -66,20 +73,28 @@ export const Login :React.FC =() =>{
 
         <div className ="login">
             <div className ="text-container">
-                <h1> Employee Sign in Page</h1>
-                <h3> Please Enter Valid Employee Credential for sign in  </h3>
+                <h4> Welcome to Employee Reimbursement Portal</h4>
+                <h6> Please Enter Valid Employee Credential for sign in  </h6>
+                <br></br>
+                <br></br>
 
                     <div className ="input-container">
                         <input type ="text" placeholder="username" name="username" onChange={storeValues}></input>
                     </div>
-
+                <br></br>
                     <div className ="input-container">
                         <input type ="password" placeholder="password" name="password " onChange={storeValues}></input>
                     </div>
-
+                    <br></br>
+                  
                     <button className ="login-button" onClick={login}>Login</button>
                     <button className ="login-button" onClick={() => navigate("/register")}>Create  Account</button>
             </div>
+            {/* Conditional Rendering to display last caught poke from global storage */}
+            {state.userSessionData.username ? <div>
+                <h6>Last Login Employee Username: {state.userSessionData.username}</h6>
+                
+            </div>:""}
             
         
         </div>

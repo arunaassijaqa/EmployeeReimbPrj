@@ -58,7 +58,7 @@ export const NewReimb : React.FC = () =>{
                 return
             }
 
-            console.log("Inside createReimb function: send post request here ")
+        console.log("Inside createReimb function: send post request here ")
 
 
         //Send a POST request to the backend for create new reimb
@@ -76,9 +76,7 @@ export const NewReimb : React.FC = () =>{
             setReturndata(response.data)
             
 
-            //use our useNavigate hook to switch views to the Catch Pokemon Component
-            //navigate("/reimbursements")
-
+            
         })
         .catch((error) => {alert("Create new reimbursement Failed!")}) //If login fails, tell the reimb that
 
@@ -86,15 +84,19 @@ export const NewReimb : React.FC = () =>{
 
     return(
 
-        <div>
-            <h1>Enter Employee Information</h1>
+        <div className ="login">
+            <div className ="text-container">
+            <h4>Enter New Reimbursement Details</h4>
 
-            <div className ="input-container">
-                <input type ="text" placeholder="description" name="description" onChange={storeValues}></input>
+            <br></br>
+            <br></br>
+            
+            <div className ="input-container">                
+                <input type ="text" placeholder="description(optional)" name="description" onChange={storeValues}></input>
             </div>
-
+            <br></br>
             <div className ="input-container">
-                <input type ="number" placeholder="amount" name="amount" onChange={storeValues}></input>
+                <input type ="number" placeholder="amount(Required)" name="amount" onChange={storeValues}></input>
             </div>
 
             
@@ -103,13 +105,13 @@ export const NewReimb : React.FC = () =>{
             {returndata   ? <p> {returndata}</p> : '' }
             </div>
             
-
+            <br></br>
             <button className ="login-button" onClick= {createReimb}>Submit</button>
             <button className ="login-button" onClick={() => navigate("/reimbursements")}>Back</button>
 
            
         
-
+            </div>
         </div>
     )
 

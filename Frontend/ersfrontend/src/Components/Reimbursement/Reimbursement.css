@@ -1,3 +1,139 @@
+/*.reimb {
+    width: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 5px;
+    border: 2px ;
+    padding: 20px;
+}
+
+.text-container {
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+
+.newreimb-container {
+    height: 20px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right:auto;
+    background-color: #F4F7F5;
+    width: 25%;
+    border-radius: 25px;
+    padding: 8px;
+    padding-left: 15px;
+}
+
+.reimb-backbutton {  
+  
+    background: #29ace0; 
+    width: 15%;
+    margin-left:auto;
+    margin-right:auto;
+    border-color: #2d2f37;
+    border-radius: 25px;
+    font-size: 0.75rem;
+    font-weight: 400;
+    padding: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+
+
+.reimb-submitbutton {  
+  
+    background: #29ace0; 
+    width: 15%;
+    margin-left:auto;
+    margin-right:auto;
+    border-color: #2d2f37;
+    border-radius: 25px;
+    font-size: 0.75rem;
+    font-weight: 400;
+    padding: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+.reimb-createbutton {  
+  
+    background: #29ace0; 
+    width: 25%;
+    margin-left:auto;
+    margin-right:auto;
+    border-color: #2d2f37;
+    border-radius: 25px;
+    font-size: 0.75rem;
+    font-weight: 400;
+    padding: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+.reimb-selectreimb {  
+  
+    background: #29ace0; 
+    width: 25%;
+    margin-left:auto;
+    margin-right:auto;
+    border-color: #2d2f37;
+    border-radius: 25px;
+    font-size: 0.75rem;
+    font-weight: 400;
+    padding: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+.reimb-allempbutton{  
+  
+    background: #29ace0; 
+    width: 20%;
+    margin-left:auto;
+    margin-right:auto;
+    border-color: #2d2f37;
+    border-radius: 25px;
+    font-size: 0.75rem;
+    font-weight: 400;
+    padding: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+.reimb-button:hover {
+    cursor: pointer;
+    box-shadow: 0 0 50px 15px #cdd7dd;
+}
+
+
+.input-container:hover{
+    box-shadow: 0 0 50px 15px #cdd7dd;
+}
+.disclaimer{
+    margin-left: auto;
+    margin-right:auto;
+    margin-top: 20%;
+}
+
+.input{
+    border-style: hidden;
+    width: stretch;
+}
+
+.reimb-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top:5%;
+}*/
+
 .reimb {
     width: stretch;
     display: flex;
