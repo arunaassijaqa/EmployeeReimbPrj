@@ -201,6 +201,19 @@ const apprReimb =async (reimb:ReimbInterface) =>{
  
  }
 
+ //Delete user by id
+ const userdelete = async(userId:number | undefined) => {
+
+    //TODO: throw some error if pokeId is typeof undefined
+    alert(userId)
+    const response = await axios.delete(state.baseUserUrl +"/"+ userId, {withCredentials:true})
+    .then((response) => console.log(response.data))
+    
+    .catch(
+        (error) => {alert("Denied Reimb request Failed!")}
+    )
+
+}
 
 
 
@@ -299,6 +312,11 @@ const apprReimb =async (reimb:ReimbInterface) =>{
                 {userList.map((u, index)  => 
                 <div>
                     <ShUser {...u}></ShUser>
+                    { ( (state.userSessionData.role === "manager") ) ? (
+                            <button className ="reimb-approve" onClick={() => userdelete(u.userId)}>Delete </button>
+                            
+                            
+                        ) : "" }
 
                 </div>
                 )}
