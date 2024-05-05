@@ -92,7 +92,7 @@ export const Login :React.FC =() =>{
             </div>
             {/* Conditional Rendering to display last caught poke from global storage */}
             {state.userSessionData.username ? <div>
-                <h6>Last Login Employee Username: {state.userSessionData.username}</h6>
+                <h6>Last Accessed Account Username: {state.userSessionData.username}</h6>
                 
             </div>:""}
             

@@ -204,7 +204,7 @@ const apprReimb =async (reimb:ReimbInterface) =>{
  //Delete user by id
  const userdelete = async(userId:number | undefined) => {
 
-    let message:string = " Do you really want to delete?"
+    let message:string = " Do you really want to delete user?"
     
     //alert(userId)
     if (window.confirm(message)) {
@@ -227,7 +227,7 @@ const apprReimb =async (reimb:ReimbInterface) =>{
         })
         
         .catch(
-            (error) => {alert("Denied Reimb request Failed!")}
+            (error) => {alert("Delete User request Failed, Manager cann't delete himself!")}
         )
 
     } else {
