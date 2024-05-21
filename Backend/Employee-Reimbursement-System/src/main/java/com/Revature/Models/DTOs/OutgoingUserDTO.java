@@ -14,12 +14,39 @@ public class OutgoingUserDTO
 
     private String role;
 
+    private String JWT;
+
+    public String getJWT() {
+        return JWT;
+    }
+
+    public void setJWT(String JWT) {
+        this.JWT = JWT;
+    }
+
+
+
+    public OutgoingUserDTO(int userId,  String username , String firstname, String lastname, String role,String JWT) {
+        this.userId = userId;
+        this.JWT = JWT;
+        this.role = role;
+        this.lastname = lastname;
+        this.firstname = firstname;
+        this.username = username;
+    }
+
     public OutgoingUserDTO(int userId, String username, String firstname, String lastname, String role) {
         this.userId = userId;
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
         this.role = role;
+    }
+
+    public OutgoingUserDTO(int userId, String username, String JWT) {
+        this.userId = userId;
+        this.username = username;
+        this.JWT = JWT;
     }
 
     public int getUserId() {
@@ -70,6 +97,7 @@ public class OutgoingUserDTO
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", role='" + role + '\'' +
+                ", JWT='" + JWT + '\'' +
                 '}';
     }
 }

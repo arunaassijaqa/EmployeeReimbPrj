@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface ReimbDAO extends JpaRepository<Reimbursment,Integer> {
 
-    public List<Reimbursment> findByUserUserId(int userId);
+        public List<Reimbursment> findByUserUserId(int userId);
 
     public List<Reimbursment> findAllByStatus(String status);
 
