@@ -79,7 +79,12 @@ const showAllReimb =async () =>{
     //Send a POST request to the backend for create new user
     //NOTE: with credentials is what lets us save/send user session info
     const response = await axios.get(state.baseReimbUrl,
-    {withCredentials:true})
+    {withCredentials:true,
+
+        headers: {
+            'Authorization': 'Bearer ' + state.userSessionData.jwt 
+    }
+    })
     .then((response) => {
 
         setFlagEmplist(false)
@@ -101,7 +106,12 @@ const showOtherStatusReimb =async (status:string) =>{
     //Send a POST request to the backend for create new user
     //NOTE: with credentials is what lets us save/send user session info
     const response = await axios.get(state.baseReimbUrl+"/"+status,
-    {withCredentials:true})
+    {withCredentials:true,
+
+        headers: {
+            'Authorization': 'Bearer ' + state.userSessionData.jwt 
+    }
+    })
     .then((response) => {
 
         setFlagEmplist(false)
@@ -124,7 +134,13 @@ const showAllEmployees =async () =>{
     //Send a GET request to the backend for create new user
     //NOTE: with credentials is what lets us save/send user session info
     const response = await axios.get(state.baseUserUrl,
-    {withCredentials:true})
+    {withCredentials:true,
+        headers: {
+            'Authorization': 'Bearer ' + state.userSessionData.jwt 
+    }
+
+        
+    })
     .then((response) => {
 
        setFlagRelist(false)
@@ -152,7 +168,12 @@ const apprReimb =async (reimb:ReimbInterface) =>{
     reimb.status="approved"
 
     const response = await axios.put(url,reimb,
-        {withCredentials:true})
+        {withCredentials:true,
+
+            headers: {
+                'Authorization': 'Bearer ' + state.userSessionData.jwt 
+        }
+        })
         .then((response) => {
     
            
@@ -183,7 +204,12 @@ const apprReimb =async (reimb:ReimbInterface) =>{
     reimb.status="denied"
 
     const response = await axios.put(url,reimb,
-        {withCredentials:true})
+        {withCredentials:true,
+
+            headers: {
+                'Authorization': 'Bearer ' + state.userSessionData.jwt 
+        }
+        })
         .then((response) => {
     
            
@@ -214,7 +240,13 @@ const apprReimb =async (reimb:ReimbInterface) =>{
         //TODO: throw some error if userID is typeof undefined
 
 
-        const response = await axios.delete(state.baseUserUrl +"/"+ userId, {withCredentials:true})
+        const response = await axios.delete(state.baseUserUrl +"/"+ userId, 
+        {withCredentials:true,
+
+            headers: {
+                'Authorization': 'Bearer ' + state.userSessionData.jwt 
+        }
+        })
         .then((response) => {
         
             

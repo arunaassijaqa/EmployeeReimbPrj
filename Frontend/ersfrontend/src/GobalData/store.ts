@@ -12,7 +12,9 @@ export const state:any = {
         username:"",
         firstname:"",
         lastname:"",
-        role:""
+        role:"",
+        jwt:""
+        
         //role:"" <- This would be used to determine if a user can do certain things
     } as UserInterface,
 

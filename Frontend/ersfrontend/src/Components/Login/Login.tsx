@@ -1,10 +1,11 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { UserInterface } from "../../Interfaces/UserInterface"
 import"./Login.css"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 
 import { state } from "../../GobalData/store"
+
 
 export const Login :React.FC =() =>{
 
@@ -15,6 +16,10 @@ export const Login :React.FC =() =>{
         password :""
         
         })
+
+        //userContext
+        //const{globalUserData,setGlobalUserData}=useContext(UserContext)
+
     //we need a useNavigate hook to allow us to navigate between components... no more manual URL changes!
     const navigate = useNavigate()
 
@@ -55,11 +60,16 @@ export const Login :React.FC =() =>{
         .then((response) => {
 
             //if the login was successful, log the user in and store their info in global state
+            console.log(response.data)
             state.userSessionData = response.data
+          //  setGlobalUserData(response.data)
             
-            console.log(state.userSessionData)
+            console.log(state.userSessionData.jwt)
+           //console.log(globalUserData)
 
             alert("Welcome, " + state.userSessionData.username)
+
+           //alert ("Welcome"+ globalUserData + "from Context API")
 
             //use our useNavigate hook to switch views to the Catch Pokemon Component
             navigate("/reimbursements")

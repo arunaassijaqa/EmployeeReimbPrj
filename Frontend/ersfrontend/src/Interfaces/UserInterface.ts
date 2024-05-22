@@ -8,5 +8,6 @@ export interface UserInterface{
     lastname?: string,
     username: string,
     role?:string,
-    password: string
+    password?: string,
+    jwt?:string
 }

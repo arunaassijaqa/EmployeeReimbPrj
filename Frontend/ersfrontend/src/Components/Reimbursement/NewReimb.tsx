@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { ReimbInterface } from "../../Interfaces/ReimbInterface"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { state } from "../../GobalData/store"
+
 
 export const NewReimb : React.FC = () =>{
 
@@ -11,8 +12,12 @@ export const NewReimb : React.FC = () =>{
         description: "",
         amount : 0,
         status : "",
-        userId : 0
+        userId : 0,
+        
         })
+
+         //Defining useContext, only the globalUserData variable, since we won't change it here
+           //const {globalUserData} = useContext(UserContext)
 
     //useNavigate to navigate between components
     const navigate = useNavigate()
@@ -70,13 +75,23 @@ export const NewReimb : React.FC = () =>{
 
             
         console.log("Inside createReimb function: send post request here ")
+        console.log(state.userSessionData.jwt)
+       // console.log(globalUserData.jwt)
 
 
         //Send a POST request to the backend for create new reimb
         //NOTE: with credentials is what lets us save/send reimb session info
         const response = await axios.post(state.baseReimbUrl,
         reimb,
-        {withCredentials:true})
+        {
+            withCredentials:true,
+            headers: {
+                    'Authorization': 'Bearer ' + state.userSessionData.jwt 
+                    //'Authorization':'Bearer ' + globalUserData.jwt
+            }
+        
+        }
+        )
         .then((response) => {
 
             //if the login was successful, log the reimb in and store their info in global state
